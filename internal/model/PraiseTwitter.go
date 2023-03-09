@@ -25,3 +25,4 @@ func DeletePraiseTwitter(id int) int {
 	}
 	return errmsg.SUCCSE
 }
+

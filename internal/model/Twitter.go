@@ -1,6 +1,9 @@
 package model
 
 import (
+	"context"
+	"fmt"
+
 	"github.com/lixvyang/mixin-twitter/internal/utils/errmsg"
 	"gorm.io/gorm"
 )
@@ -28,7 +31,21 @@ func DeleteTwitter(id int) int {
 	return errmsg.SUCCSE
 }
 
-func ListTwitter() (twitters []Twitter, code int) {
-	// err := db.Order("created_at DESC").Find(&twitters)
-	return twitters, code
+func CheckTwitterLength() int64 {
+	var count int64
+	err := db.Model(&Twitter{}).Where("id >= ?", 0).Count(&count).Error
+	if err != nil {
+		return 0
+	}
+	return count
+}
+
+func ListTwitters(preId int64, pageSize int64) ([]Twitter, int) {
+	var twitters []Twitter
+	err := db.Debug().WithContext(context.Background()).Where("id <= ?", preId).Order("id desc").Limit(int(pageSize)).Find(&twitters).Error
+	if err != nil {
+		fmt.Println(222)
+		return twitters, errmsg.ERROR
+	}
+	return twitters, errmsg.SUCCSE
 }
