@@ -4,14 +4,11 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lixvyang/mixin-twitter/internal/api/v1/twitter"
 	"github.com/spf13/viper"
 )
 
-type R struct{}
-
 func InitRouter(signal chan os.Signal) {
-	var h R
+	var h r
 	gin.SetMode(viper.GetString("server.AppMode"))
 	r := gin.New()
 	_ = r.SetTrustedProxies(nil)
@@ -19,17 +16,12 @@ func InitRouter(signal chan os.Signal) {
 	r.Use(gin.Logger(), gin.Recovery())
 
 	api := r.Group("api/v1")
-
+	h.HandleOauthRouter(api)
+	h.HandlePraiseCommentRouter(api)
+	h.HandlePraiseTwitterRouter(api)
 	h.HandleTwitterRouter(api)
+	h.HandleTwitterCommentRouter(api)
+	h.HandleUserRouter(api)
 
 	r.Run(viper.GetString("server.HttpPort"))
-}
-
-func (*R) HandleTwitterRouter(c *gin.RouterGroup) {
-	c.GET("/twitter/list", twitter.ListTwitter)
-	c.POST("/twitter/create", twitter.CreateTwitter)
-}
-
-func (*R) HandleUserRouter(c *gin.RouterGroup) {
-	c.POST("/user/create")
 }

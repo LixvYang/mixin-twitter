@@ -1,4 +1,4 @@
-package parasetwitter
+package praisecomment
 
 import (
 	"github.com/gin-gonic/gin"
