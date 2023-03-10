@@ -53,7 +53,6 @@ func InitDB() {
 		&TwitterComment{},
 	)
 
-	fmt.Println("Connect Success!")
 	sqlDB, _ := db.DB()
 	// SetMaxIdleCons 设置连接池中的最大闲置连接数。
 	// SetMaxOpenCons 设置数据库的最大连接数量。

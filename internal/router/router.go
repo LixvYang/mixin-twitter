@@ -20,12 +20,16 @@ func InitRouter(signal chan os.Signal) {
 
 	api := r.Group("api/v1")
 
-	h.HandleTwitter(api)
+	h.HandleTwitterRouter(api)
 
 	r.Run(viper.GetString("server.HttpPort"))
 }
 
-func (*R) HandleTwitter(c *gin.RouterGroup) {
+func (*R) HandleTwitterRouter(c *gin.RouterGroup) {
 	c.GET("/twitter/list", twitter.ListTwitter)
 	c.POST("/twitter/create", twitter.CreateTwitter)
+}
+
+func (*R) HandleUserRouter(c *gin.RouterGroup) {
+	c.POST("/user/create")
 }

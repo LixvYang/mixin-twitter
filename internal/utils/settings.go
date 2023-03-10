@@ -16,5 +16,4 @@ func Init() {
 	if err != nil {
 		panic(fmt.Errorf("Fatal error config file: %s \n", err))
 	}
-	fmt.Println(viper.Get("database.DbName"))
 }

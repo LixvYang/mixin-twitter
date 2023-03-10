@@ -1,6 +1,9 @@
 package model
 
-import "gorm.io/gorm"
+import (
+	"github.com/lixvyang/mixin-twitter/internal/utils/errmsg"
+	"gorm.io/gorm"
+)
 
 type TwitterComment struct {
 	gorm.Model
@@ -11,4 +14,26 @@ type TwitterComment struct {
 	PraiseNum      int    `gorm:"type:int(8); default 0" json:"praise_num"`
 	ToUid          string `gorm:"type:varchar(36);default null" json:"to_uid"`
 	ToUserName     string `gorm:"type:varchar(36);default null" json:"to_user_name"`
+}
+
+func GetTwitterCommentById(id int) (TwitterComment, int) {
+	var twittercomment TwitterComment
+	if err := db.Where("id = ?", id).Find(&twittercomment).Error; err != nil {
+		return twittercomment, errmsg.ERROR
+	}
+	return twittercomment, errmsg.SUCCSE
+}
+
+func CreateTwitterComment(t *TwitterComment) int {
+	if err := db.Create(&t).Error; err != nil {
+		return errmsg.ERROR
+	}
+	return errmsg.SUCCSE
+}
+
+func DeleteTwitterComment(id int) int {
+	if err := db.Where("id = ?", id).Delete(&TwitterComment{}).Error; err != nil {
+		return errmsg.ERROR
+	}
+	return errmsg.SUCCSE
 }
