@@ -69,6 +69,7 @@ func ListTwitter(c *gin.Context) {
 			PageSize:      int64(pageSize),
 		}
 		prePageToken = string(prePageInfo.Encode())
+
 		v1.SendResponse(c, errmsg.SUCCSE, ListTwitterResp{
 			PrePageToken: prePageToken,
 			List:         twittersList[:len(twittersList)-1],
@@ -80,6 +81,5 @@ func ListTwitter(c *gin.Context) {
 		PrePageToken: prePageToken,
 		List:         twittersList,
 	})
-
 	return
 }

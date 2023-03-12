@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/lixvyang/mixin-twitter/internal/utils/cors"
 	"github.com/spf13/viper"
 )
 
@@ -13,7 +14,7 @@ func InitRouter(signal chan os.Signal) {
 	r := gin.New()
 	_ = r.SetTrustedProxies(nil)
 
-	r.Use(gin.Logger(), gin.Recovery())
+	r.Use(gin.Logger(), gin.Recovery(), cors.Cors())
 
 	api := r.Group("api/v1")
 	h.HandleOauthRouter(api)

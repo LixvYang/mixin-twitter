@@ -24,35 +24,26 @@ func MixinOauth(c *gin.Context) {
 	userinfo, err := GetUserInfo(access_token)
 	if err != nil {
 		c.Redirect(http.StatusPermanentRedirect, "http://localhost:8080")
+		return
 	}
 
 	user := model.User{
-		Uid:       userinfo.UserID,
-		AvatarUrl: userinfo.AvatarURL,
-		FullName:  userinfo.FullName,
-		SessionId: userinfo.SessionID,
+		Uid:            userinfo.UserID,
+		AvatarUrl:      userinfo.AvatarURL,
+		FullName:       userinfo.FullName,
+		SessionId:      userinfo.SessionID,
+		IdentityNumber: userinfo.IdentityNumber,
 	}
 
-	// 如果用户不存在
 	if checked := model.CheckUser(userinfo.UserID); checked != errmsg.SUCCSE {
+		// 如果用户不存在
 		if coded := model.CreateUser(&user); coded != errmsg.SUCCSE {
 			fmt.Println("Get userInfo fail!!!")
 		}
-
-		// sessionToken := uuid.NewV4().String()
-		// session.Set("userId", user.MixinUuid)
-		// session.Set("token", sessionToken)
-		// _ = session.Save()
 	} else {
-		//用户存在 就更新数据
 		if coded := model.UpdateUser(userinfo.UserID, &user); coded != errmsg.SUCCSE {
 			log.Println("Update userInfo fail!!!")
 		}
-		// session.Clear()
-		// sessionToken := uuid.NewV4().String()
-		// session.Set("userId", user.MixinUuid)
-		// session.Set("token", sessionToken)
-		// session.Save()
 	}
 	c.Redirect(http.StatusPermanentRedirect, "http://localhost:8080")
 }

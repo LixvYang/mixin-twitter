@@ -20,6 +20,7 @@ func (*r) HandleTwitterRouter(c *gin.RouterGroup) {
 
 func (*r) HandleUserRouter(c *gin.RouterGroup) {
 	c.POST("/user/create", user.CreateUser)
+	c.GET("/user/get", user.GetUserInfoByUserId)
 }
 
 func (*r) HandleOauthRouter(c *gin.RouterGroup) {
