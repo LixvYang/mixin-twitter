@@ -1,6 +1,8 @@
 package user
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 	v1 "github.com/lixvyang/mixin-twitter/internal/api/v1"
 	"github.com/lixvyang/mixin-twitter/internal/model"
@@ -8,13 +10,15 @@ import (
 )
 
 type GetUserReq struct {
-	Uid string `gorm:"type:varchar(36);" json:"uid"`
+	Uid string `json:"uid"`
 }
 
 func GetUserInfoByUserId(c *gin.Context) {
+	fmt.Println("来请求了")
 	var r GetUserReq
 	if err := c.ShouldBindJSON(&r); err != nil {
 		v1.SendResponse(c, errmsg.ERROR, nil)
+		return
 	}
 
 	data, code := model.GetUser(r.Uid)

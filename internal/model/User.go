@@ -7,8 +7,8 @@ import (
 
 type User struct {
 	FullName       string `gorm:"type:varchar(50);not null" json:"full_name"`
-	Uid            string `gorm:"type:varchar(36);index;" json:"identity_number"`
-	IdentityNumber string `gorm:"type:varchar(36);index;" json:"uid"`
+	Uid            string `gorm:"type:varchar(36);index;" json:"uid"`
+	IdentityNumber string `gorm:"type:varchar(36);index;" json:"identity_number"`
 	AvatarUrl      string `gorm:"type:varchar(255);not null" json:"avatar_url"`
 	SessionId      string `gorm:"type:varchar(50);" json:"session_id"`
 

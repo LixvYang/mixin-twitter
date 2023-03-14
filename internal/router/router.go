@@ -16,6 +16,7 @@ func InitRouter(signal chan os.Signal) {
 
 	r.Use(gin.Logger(), gin.Recovery(), cors.Cors())
 
+	// http:127.0.0.1:8080/api/v1//user/create
 	api := r.Group("api/v1")
 	h.HandleOauthRouter(api)
 	h.HandlePraiseCommentRouter(api)

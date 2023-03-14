@@ -48,6 +48,7 @@ func InitDB() {
 	// 迁移数据表，在没有数据表结构变更时候，建议注释不执行
 	db.AutoMigrate(
 		&User{},
+		&PraiseComment{},
 		&PraiseTwitter{},
 		&Twitter{},
 		&TwitterComment{},
