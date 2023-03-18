@@ -12,7 +12,7 @@ type DeleteRequest struct {
 	Tid uint `json:"tid"`
 }
 
-func DeleteParaseComment(c *gin.Context) {
+func DeletePraiseComment(c *gin.Context) {
 	var data DeleteRequest
 	if err := c.ShouldBindJSON(&data); err != nil {
 		v1.SendResponse(c, errmsg.ERROR_BIND, nil)

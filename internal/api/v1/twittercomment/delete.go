@@ -25,14 +25,14 @@ func DeleteTwitterComment(c *gin.Context) {
 		return
 	}
 
-	if tc.FromUid != r.Uid {
+	if tc.FromUuid != r.Uid {
 		v1.SendResponse(c, errmsg.ERROR, nil)
 		return
 	}
 
 	code = model.DeleteTwitterComment(r.Id)
 	if code != errmsg.SUCCSE {
-		v1.SendResponse(c, errmsg.ERROR_DELETE_CATENAME, nil)
+		v1.SendResponse(c, errmsg.ERROR, nil)
 		return
 	}
 

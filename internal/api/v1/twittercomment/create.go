@@ -13,7 +13,6 @@ func CreateComment(c *gin.Context) {
 		v1.SendResponse(c, errmsg.ERROR_BIND, nil)
 		return
 	}
-
 	if code := model.CreateTwitterComment(&data); code != errmsg.SUCCSE {
 		v1.SendResponse(c, errmsg.ERROR, nil)
 		return

@@ -20,10 +20,19 @@ func CreatePraiseTwitter(p *PraiseTwitter) int {
 	return errmsg.SUCCSE
 }
 
-func DeletePraiseTwitter(id uint, tid uint) int {
-	if err := db.Where("id = ?", id).Delete(&PraiseTwitter{}).Error; err != nil {
+func DeletePraiseTwitter(tid uint, from_uuid string) int {
+	if err := db.Where("tid = ? AND from_uuid = ?", tid, from_uuid).Delete(&PraiseTwitter{}).Error; err != nil {
 		return errmsg.ERROR
 	}
 	db.Model(&Twitter{}).Where("id = ?", tid).UpdateColumn("praise_num", gorm.Expr("praise_num - ?", 1))
+	return errmsg.SUCCSE
+}
+
+// uid from_uuid
+func CheckIfPraise(uid string, tid uint) int {
+	var praiseTwitter PraiseTwitter
+	if err := db.Where("from_uuid = ? AND tid = ?", uid, tid).Last(&praiseTwitter).Error; err != nil || err == gorm.ErrRecordNotFound {
+		return errmsg.ERROR
+	}
 	return errmsg.SUCCSE
 }

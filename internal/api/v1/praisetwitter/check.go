@@ -1,4 +1,4 @@
-package praisecomment
+package praisetwitter
 
 import (
 	"github.com/gin-gonic/gin"
@@ -7,18 +7,23 @@ import (
 	"github.com/lixvyang/mixin-twitter/internal/utils/errmsg"
 )
 
-func CreatePraiseComment(c *gin.Context) {
-	var data model.PraiseComment
-	if err := c.ShouldBindJSON(&data); err != nil {
+type CheckPraiseTwitterReq struct {
+	Uid string   `json:"uid"`
+	Tid uint `json:"tid"`
+}
+
+func CheckPraiseTwitter(c *gin.Context) {
+	var r CheckPraiseTwitterReq
+
+	if err := c.ShouldBindJSON(&r); err != nil {
 		v1.SendResponse(c, errmsg.ERROR_BIND, nil)
 		return
 	}
-	
-
-	if code := model.CreatePraiseComment(&data); code != errmsg.SUCCSE {
+	code := model.CheckIfPraise(r.Uid, r.Tid)
+	if code != errmsg.SUCCSE {
 		v1.SendResponse(c, errmsg.ERROR, nil)
 		return
 	}
-
 	v1.SendResponse(c, errmsg.SUCCSE, nil)
+	return
 }

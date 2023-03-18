@@ -7,7 +7,9 @@ import (
 	"net/http"
 
 	"github.com/fox-one/mixin-sdk-go"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"github.com/gofrs/uuid"
 	"github.com/lixvyang/mixin-twitter/internal/model"
 	"github.com/lixvyang/mixin-twitter/internal/utils/errmsg"
 	"github.com/spf13/viper"
@@ -18,6 +20,7 @@ func MixinOauth(c *gin.Context) {
 	access_token, _, err := mixin.AuthorizeToken(c, viper.GetString("mixin.ClientId"), viper.GetString("mixin.AppSecret"), code, "")
 	if err != nil {
 		log.Printf("AuthorizeToken: %v", err)
+		c.Redirect(http.StatusPermanentRedirect, "http://localhost:8080")
 		return
 	}
 
@@ -35,6 +38,7 @@ func MixinOauth(c *gin.Context) {
 		IdentityNumber: userinfo.IdentityNumber,
 	}
 
+	session := sessions.Default(c)
 	if checked := model.CheckUser(userinfo.UserID); checked != errmsg.SUCCSE {
 		// 如果用户不存在
 		if coded := model.CreateUser(&user); coded != errmsg.SUCCSE {
@@ -44,6 +48,14 @@ func MixinOauth(c *gin.Context) {
 		if coded := model.UpdateUser(userinfo.UserID, &user); coded != errmsg.SUCCSE {
 			log.Println("Update userInfo fail!!!")
 		}
+		session.Clear()
+	}
+	sessionToken, _ := uuid.NewV4()
+	session.Set("userId", user.Uid)
+	session.Set("token", sessionToken.String())
+	err = session.Save()
+	if err != nil {
+		log.Fatal(err.Error())
 	}
 	c.Redirect(http.StatusPermanentRedirect, "http://localhost:8080")
 }

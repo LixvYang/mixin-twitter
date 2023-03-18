@@ -3,6 +3,7 @@ package user
 import (
 	"fmt"
 
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	v1 "github.com/lixvyang/mixin-twitter/internal/api/v1"
 	"github.com/lixvyang/mixin-twitter/internal/model"
@@ -14,14 +15,17 @@ type GetUserReq struct {
 }
 
 func GetUserInfoByUserId(c *gin.Context) {
-	fmt.Println("来请求了")
-	var r GetUserReq
-	if err := c.ShouldBindJSON(&r); err != nil {
-		v1.SendResponse(c, errmsg.ERROR, nil)
-		return
-	}
+	// var r GetUserReq
+	session := sessions.Default(c)
+	id := session.Get("userId")
+	userId := fmt.Sprintf("%v", id)
+	fmt.Println("userId : ", userId)
+	// if err := c.ShouldBindJSON(&r); err != nil {
+	// 	v1.SendResponse(c, errmsg.ERROR, nil)
+	// 	return
+	// }
 
-	data, code := model.GetUser(r.Uid)
+	data, code := model.GetUser(userId)
 	if code != errmsg.SUCCSE {
 		v1.SendResponse(c, errmsg.ERROR, nil)
 		return
