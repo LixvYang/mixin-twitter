@@ -10,10 +10,10 @@ import (
 
 type Twitter struct {
 	gorm.Model
-	Uid        string `gorm:"type:varchar(36);index:comment_from_uid" json:"from_uid"`
+	Uid        string `gorm:"type:varchar(36);index:comment_from_uid" json:"uid"`
 	Content    string `gorm:"longtext" json:"content"`
-	UserName   string `gorm:"type:varchar(36)" json:"user_name"`
-	UserAvatar string `gorm:"type:varchar(255)" json:"user_avatar"`
+	UserName   string `gorm:"type:longtext" json:"user_name"`
+	UserAvatar string `gorm:"type:longtext" json:"user_avatar"`
 	PraiseNum  int    `gorm:"type:int(8); default 0" json:"praise_num"`
 }
 
