@@ -12,7 +12,7 @@ import (
 
 // func createMyRender() multitemplate.Renderer {
 // 	p := multitemplate.NewRenderer()
-// 	p.AddFromFiles("front", "web/front/dist/index.html")
+// 	p.AddFromFiles("front", "./build/index.html")
 // 	return p
 // }
 
@@ -27,12 +27,13 @@ func InitRouter(signal chan os.Signal) {
 	// r.HTMLRender = createMyRender()
 	r.Use(gin.Logger(), gin.Recovery(), cors.Cors())
 	r.Use(sessions.Sessions("_mixin_twitter", store))
-	// r.Static("/static", "./web/front/dist/static")
-	// r.StaticFile("/favicon.ico", "./web/front/dist/favicon.ico")
+	// r.Static("/static", "./dist/static")
+	// r.StaticFile("/favicon.ico", "./build/favicon.ico")
 
 	// r.GET("/", func(c *gin.Context) {
 	// 	c.HTML(200, "front", nil)
 	// })
+
 	api := r.Group("api/v1")
 	h.HandleOauthRouter(api)
 	h.HandlePraiseCommentRouter(api)
@@ -41,5 +42,6 @@ func InitRouter(signal chan os.Signal) {
 	h.HandleTwitterCommentRouter(api)
 	h.HandleUserRouter(api)
 
-	r.Run(viper.GetString("server.HttpPort"))
+	// r.Run(viper.GetString("server.HttpPort"))
+	r.Run(":3000")
 }

@@ -15,7 +15,7 @@ func main() {
 	signalch := make(chan os.Signal, 1)
 	utils.InitSetting.Do(utils.Init)
 	model.InitDB()
-	router.InitRouter(signalch)
+	go router.InitRouter(signalch)
 
 	//attach signal
 	signal.Notify(signalch, os.Interrupt, syscall.SIGTERM)

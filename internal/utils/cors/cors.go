@@ -11,7 +11,12 @@ func Cors() gin.HandlerFunc {
 		method := c.Request.Method
 		origin := c.Request.Header.Get("Origin")
 		if origin != "" {
-			c.Header("Access-Control-Allow-Origin", "http://localhost:8080")
+			// c.Header("Access-Control-Allow-Origin", "http://localhost:8080")
+			// if viper.GetString("server.AppMode") == "release" {
+			// 	c.Header("Access-Control-Allow-Origin", "http://43.143.154.162")
+			// } else {
+			c.Header("Access-Control-Allow-Origin", "http://43.143.154.162")
+			// }
 			// c.Header("Access-Control-Allow-Origin", "*")
 			c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE, PATCH")
 			c.Header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization")

@@ -12,21 +12,29 @@ import (
 	"github.com/gofrs/uuid"
 	"github.com/lixvyang/mixin-twitter/internal/model"
 	"github.com/lixvyang/mixin-twitter/internal/utils/errmsg"
-	"github.com/spf13/viper"
 )
 
 func MixinOauth(c *gin.Context) {
 	var code = c.Query("code")
-	access_token, _, err := mixin.AuthorizeToken(c, viper.GetString("mixin.ClientId"), viper.GetString("mixin.AppSecret"), code, "")
+	// access_token, _, err := mixin.AuthorizeToken(c, viper.GetString("mixin.ClientId"), viper.GetString("mixin.AppSecret"), code, "")
+	access_token, _, err := mixin.AuthorizeToken(c, "30aad5a5-e5f3-4824-9409-c2ff4152724e", "dfbec1086bc839838e1921634aa062f87a624458918cb6929d7831fe676cfed6", code, "")
 	if err != nil {
 		log.Printf("AuthorizeToken: %v", err)
-		c.Redirect(http.StatusPermanentRedirect, "http://localhost:8080")
+		// if viper.GetString("server.AppMode") == "release" {
+		c.Redirect(http.StatusPermanentRedirect, "http://43.143.154.162")
+		// } else {
+		// 	c.Redirect(http.StatusPermanentRedirect, "http://localhost:8080")
+		// }
 		return
 	}
 
 	userinfo, err := GetUserInfo(access_token)
 	if err != nil {
-		c.Redirect(http.StatusPermanentRedirect, "http://localhost:8080")
+		// if viper.GetString("server.AppMode") == "release" {
+		c.Redirect(http.StatusPermanentRedirect, "http://43.143.154.162")
+		// } else {
+		// 	c.Redirect(http.StatusPermanentRedirect, "http://localhost:8080")
+		// }
 		return
 	}
 
@@ -57,7 +65,11 @@ func MixinOauth(c *gin.Context) {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	c.Redirect(http.StatusPermanentRedirect, "http://localhost:8080")
+	// if viper.GetString("server.AppMode") == "release" {
+	c.Redirect(http.StatusPermanentRedirect, "http://43.143.154.162")
+	// } else {
+	// 	c.Redirect(http.StatusPermanentRedirect, "http://localhost:8080")
+	// }
 }
 
 type UserInfo struct {
