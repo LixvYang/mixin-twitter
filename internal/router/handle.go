@@ -2,12 +2,12 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/lixvyang/mixin-twitter/internal/api/v1/oauth"
-	"github.com/lixvyang/mixin-twitter/internal/api/v1/praisecomment"
-	"github.com/lixvyang/mixin-twitter/internal/api/v1/praisetwitter"
-	"github.com/lixvyang/mixin-twitter/internal/api/v1/twitter"
-	"github.com/lixvyang/mixin-twitter/internal/api/v1/twittercomment"
-	"github.com/lixvyang/mixin-twitter/internal/api/v1/user"
+	"github.com/lixvyang/mixin-twitter/api/v1/oauth"
+	"github.com/lixvyang/mixin-twitter/api/v1/praisecomment"
+	"github.com/lixvyang/mixin-twitter/api/v1/praisetwitter"
+	"github.com/lixvyang/mixin-twitter/api/v1/twitter"
+	"github.com/lixvyang/mixin-twitter/api/v1/twittercomment"
+	"github.com/lixvyang/mixin-twitter/api/v1/user"
 )
 
 type r struct {
@@ -16,6 +16,7 @@ type r struct {
 func (*r) HandleTwitterRouter(c *gin.RouterGroup) {
 	c.GET("/twitter/list", twitter.ListTwitter)
 	c.POST("/twitter/create", twitter.CreateTwitter)
+	c.DELETE("/twitter/delete", twitter.DeleteTwitter)
 }
 
 func (*r) HandleUserRouter(c *gin.RouterGroup) {

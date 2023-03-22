@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/spf13/viper"
+	"github.com/lixvyang/mixin-twitter/internal/utils"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -18,11 +18,11 @@ var (
 
 func InitDB() {
 	dns := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-		viper.GetString("database.DbUser"),
-		viper.GetString("database.DbPassWord"),
-		viper.GetString("database.DbHost"),
-		viper.GetString("database.DbPort"),
-		viper.GetString("database.DbName"),
+		utils.Conf.Database.DbUser,
+		utils.Conf.Database.DbPassWord,
+		utils.Conf.Database.DbHost,
+		utils.Conf.Database.DbPort,
+		utils.Conf.Database.DbName,
 	)
 
 	var err error
