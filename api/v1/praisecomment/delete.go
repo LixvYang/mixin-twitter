@@ -2,7 +2,7 @@ package praisecomment
 
 import (
 	"github.com/gin-gonic/gin"
-	v1 "github.com/lixvyang/mixin-twitter/api/v1"
+	"github.com/lixvyang/mixin-twitter/api/v1"
 	"github.com/lixvyang/mixin-twitter/internal/model"
 	"github.com/lixvyang/mixin-twitter/internal/utils/errmsg"
 )
