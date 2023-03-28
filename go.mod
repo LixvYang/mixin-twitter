@@ -4,7 +4,6 @@ go 1.19
 
 require (
 	github.com/fox-one/mixin-sdk-go v1.7.3
-	github.com/gin-contrib/multitemplate v0.0.0-20230212012517-45920c92c271
 	github.com/gin-contrib/sessions v0.0.5
 	github.com/gin-gonic/gin v1.9.0
 	github.com/gofrs/uuid v4.3.0+incompatible
